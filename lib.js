@@ -79,21 +79,20 @@ function Draw() {
 		}
 	}
 
-	this.poly = function(polyPts, fs, fill) {
+	this.poly = function(x, y, polyPts, fs, fill) {
 		var args = polyPts;
-		this.render.fillStyle = fs;
 
+		this.render.fillStyle = fs;
 		this.render.beginPath();
-		this.render.moveTo(0, 0);
-		this.render.moveTo(10, 50)
-		this.render.lineTo(100,50);;
-		//this.render.moveTo(args[0][0], args[0][1]);
-		//this.render.lineTo(args[1][0], args[1][1]);
+		this.render.moveTo(x, y);
+
+		for(let i = 0; i < args.length; i++) {
+			this.render.lineTo(args[i][0], args[i][1]);
+			console.log(args[i][0] + args[i][1])
+		}
 
 		this.render.closePath();
-		//for(arg in args) {
-
-		//}
+		
 		if(fill) {
 			this.render.fill();
 		}
