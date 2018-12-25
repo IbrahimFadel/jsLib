@@ -1,4 +1,6 @@
 function Ibrah() {
+	this.canvas;
+	this.render;
 	this.Draw = new Draw();
 	this.Physics = new Physics();
 }
@@ -13,7 +15,6 @@ function Physics() {
 			y: y,
 			img: img
 		}
-		console.log(this.sprite.x);
 		Ibrah.Draw.img(x, y, img);
 	}
 
@@ -23,100 +24,96 @@ function Physics() {
 }
 
 function Draw() {
-	this.canvas;
-	this.render;
-
 	this.createCanvas = function(x, y, w, h) {
-		this.canvas = document.createElement("CANVAS");
-		this.render = this.canvas.getContext("2d");
+		Ibrah.canvas = document.createElement("CANVAS");
+		Ibrah.render = Ibrah.canvas.getContext("2d");
 
 
-		this.canvas.width = w;
-		this.canvas.height = h;
-		this.canvas.style.left = x + "px";
-		this.canvas.style.top = y + "px";
-		this.canvas.style.position = "absolute";
+		Ibrah.canvas.width = w;
+		Ibrah.canvas.height = h;
+		Ibrah.canvas.style.left = x + "px";
+		Ibrah.canvas.style.top = y + "px";
+		Ibrah.canvas.style.position = "absolute";
 
-	    document.body.appendChild(this.canvas);
+	    document.body.appendChild(Ibrah.canvas);
 	}
 
 	this.canvasBg = function(bg) {
-		this.rect(parseInt(this.canvas.style.left.replace(/\D/g,'')), parseInt(this.canvas.style.top.replace(/\D/g,'')), this.canvas.width, this.canvas.height, bg);
+		Ibrah.rect(parseInt(Ibrah.canvas.style.left.replace(/\D/g,'')), parseInt(Ibrah.canvas.style.top.replace(/\D/g,'')), Ibrah.canvas.width, Ibrah.canvas.height, bg);
 	}
 
 	this.rect = function(x, y, w, h, fs) {
-		this.render.fillStyle = fs;
-		this.render.fillRect(x, y, w, h);
-		this.render.fill();
+		Ibrah.render.fillStyle = fs;
+		Ibrah.render.fillRect(x, y, w, h);
+		Ibrah.render.fill();
 	}
 
 	this.ellipse = function(x, y, rx, ry, r, sa, ea, fs) {
-		this.render.fillStyle = fs;
-		this.render.ellipse(x, y, rx, ry, r, sa, ea);
-		this.render.stroke();
+		Ibrah.render.fillStyle = fs;
+		Ibrah.render.ellipse(x, y, rx, ry, r, sa, ea);
+		Ibrah.render.stroke();
 
 		if(fs != undefined) {
-			this.render.fill();
+			Ibrah.render.fill();
 		}
 	}
 
 	this.circle = function(x, y, r, sa, ea, fs) {
-		this.render.beginPath();
-		this.render.fillStyle = fs;
-		this.render.arc(x, y, r, sa, ea);
-		this.render.stroke();
-		this.render.closePath();
+		Ibrah.render.beginPath();
+		Ibrah.render.fillStyle = fs;
+		Ibrah.render.arc(x, y, r, sa, ea);
+		Ibrah.render.stroke();
+		Ibrah.render.closePath();
 
 		if(fs != undefined) {
-			this.render.fill();
+			Ibrah.render.fill();
 		}
 	}
 
 	this.poly = function(x, y, polyPts, fs) {
 		var args = polyPts;
 
-		this.render.fillStyle = fs;
-		this.render.beginPath();
-		this.render.moveTo(x, y);
+		Ibrah.render.fillStyle = fs;
+		Ibrah.render.beginPath();
+		Ibrah.render.moveTo(x, y);
 
 		for(let i = 0; i < args.length; i++) {
-			this.render.lineTo(args[i][0], args[i][1]);
-			console.log(args[i][0] + args[i][1])
+			Ibrah.render.lineTo(args[i][0], args[i][1]);
 		}
 
-		this.render.closePath();
+		Ibrah.render.closePath();
 		
 		if(fs != undefined) {
-			this.render.fill();
+			Ibrah.render.fill();
 		}
 	}
 
 	this.line = function(x1, y1, x2, y2, fs, lw) {
-		this.render.strokeStyle = fs;
-		this.render.lineWidth = lw;
-		this.render.beginPath();
-		this.render.moveTo(x1, y1);
-		this.render.lineTo(x2, y2);
-		this.render.stroke();
+		Ibrah.render.strokeStyle = fs;
+		Ibrah.render.lineWidth = lw;
+		Ibrah.render.beginPath();
+		Ibrah.render.moveTo(x1, y1);
+		Ibrah.render.lineTo(x2, y2);
+		Ibrah.render.stroke();
 
 		if(fs != undefined) {
-			this.render.fill();
+			Ibrah.render.fill();
 		}
 	}
 
 	this.triangle = function(x1, y1, x2, y2, x3, y3, fs, ls, lw) {
-		this.render.fillStyle = fs;
-		this.render.strokeStyle = ls;
-		this.render.lineWidth = lw;
-		this.render.beginPath();
+		Ibrah.render.fillStyle = fs;
+		Ibrah.render.strokeStyle = ls;
+		Ibrah.render.lineWidth = lw;
+		Ibrah.render.beginPath();
 
-		this.render.moveTo(x1, y1);
-		this.render.lineTo(x2, y2);
-		this.render.lineTo(x3, y3);
-		this.render.stroke();
+		Ibrah.render.moveTo(x1, y1);
+		Ibrah.render.lineTo(x2, y2);
+		Ibrah.render.lineTo(x3, y3);
+		Ibrah.render.stroke();
 
 		if(fs != undefined) {
-			this.render.fill();
+			Ibrah.render.fill();
 		}
 	}
 
@@ -127,18 +124,25 @@ function Draw() {
 	this.drawImage = function(ctx, image, sx, sy, sw, sh) {
 		if(!image.complete) {
 			setTimeout(function() {
-				Ibrah.Draw.drawImage(this.render, image, sx, sy, sw, sh);
+				Ibrah.Draw.drawImage(Ibrah.render, image, sx, sy, sw, sh);
 			}, 50);
 			return;
 		}
-
-		this.render.drawImage(image, sx, sy, sw, sh);
+		Ibrah.render.drawImage(image, sx, sy, sw, sh);
 	}
 
 	this.img = function(sx, sy, img, sw, sh, dx, dy, dw, dh) {
+		let caller = this.img.caller;
 		let image = new Image();
 		image.src = img;
-		this.drawImage(this.render, image, sx, sy, sw, sh);
+		if(caller != null) {
+			image.onload = function() {
+				sw = image.width;
+				sh = image.height;
+				Ibrah.Draw.drawImage(Ibrah.render, image, sx, sy, sw, sh);	
+			}
+		}
+		this.drawImage(Ibrah.render, image, sx, sy, sw, sh);
 	}
 }
 
