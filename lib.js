@@ -1,12 +1,39 @@
 function Ibrah() {
 	this.Draw = new Draw();
+	this.Physics = new Physics();
+}
+
+function Physics() {
+	this.sprite;
+	this.gravity;
+
+	this.createSprite = function(x, y, img) {
+		this.sprite = {
+			x : x,
+			y: y,
+			img: img
+		}
+
+		Ibrah.Draw.img(x, y, img);
+	}
+
+	/*this.enablePhyics = function(obj) {
+		obj = {
+			x : 0,
+			y: 0
+		};
+		obj.y = 100; 
+	}
+
+	this.enableGravity = function(obj, amt) {
+		this.gravity = amt;
+		obj.y -= this.gravity;
+	}*/
 }
 
 function Draw() {
 	this.canvas;
 	this.render;
-
-	// Canvas / Canvas Settings
 
 	this.createCanvas = function(x, y, w, h) {
 		this.canvas = document.createElement("CANVAS");
@@ -26,8 +53,6 @@ function Draw() {
 		this.rect(parseInt(this.canvas.style.left.replace(/\D/g,'')), parseInt(this.canvas.style.top.replace(/\D/g,'')), this.canvas.width, this.canvas.height, bg);
 	}
 
-	// SHAPES/POLYGONS
-
 	this.rect = function(x, y, w, h, fs) {
 		this.render.fillStyle = fs;
 		this.render.fillRect(x, y, w, h);
@@ -45,9 +70,11 @@ function Draw() {
 	}
 
 	this.circle = function(x, y, r, sa, ea, fs) {
+		this.render.beginPath();
 		this.render.fillStyle = fs;
 		this.render.arc(x, y, r, sa, ea);
 		this.render.stroke();
+		this.render.closePath();
 
 		if(fs != undefined) {
 			this.render.fill();
@@ -102,12 +129,35 @@ function Draw() {
 		}
 	}
 
-	// IMAGES
+	this.point = function(x, y, fs, lw) {
+		this.circle(x, y, lw, 0, 2*Math.PI, fs);
+	}
 
-	/*this.image = function(img, sx, sy, sw, sh, dx, dy, dw, dh) {
-		var image = document.createElement("img");
-		image.style.width = 0;
-		image.style.height = 0;
- 		void this.render.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
-	}*/
+	this.img = function(sx, sy, img, sw, sh, dx, dy, dw, dh) {
+		let image = new Image();
+		image.src = img;
+		caller = this.img.caller;
+		found = false;
+		if(this.img.caller == caller && caller != null) {
+			console.log("Found Caller")
+			found = true;
+		} else {
+			console.log("No Caller")
+			found = false;
+		}
+
+		image.addEventListener('load', function() {
+			if(found) {
+				sw = this.width;
+				sh = this.height;
+				console.log(sw + ' ' + sh);
+			}
+		})
+
+		console.log(sw + ' ' + sh);
+		
+		void this.render.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
+	}
 }
+
+
