@@ -1,62 +1,33 @@
-function Game(x, y, w, h) {
-	this.x = x;
-	this.y = y;
-	this.w = w;
-	this.h = h;
-	//this.canvas;
-	//this.render;
-
-	this.draw = function(x, y, w, h) {
-		x = this.x;
-		y = this.y;
-		w = this.w;
-		h = this.h;
-		new Draw(this.x, this.y, this.w, this.h);
-	}
-
-	/*this.draw = function(x, y, w, h) {
-		console.log("Creating Canvas");
-		var canvas = document.createElement("CANVAS");
-		var render = canvas.getContext("2d");
-
-		canvas.left = x;
-		canvas.top = y;
-		canvas.width = w;
-		canvas.height = h;
-		canvas.style.position = "absolute";
-
-		console.log(canvas.width);
-
-		render.fillStyle = "#FF0000";
-		render.fillRect(0, 0, 10, 10);
-		console.log("Canvas Created");
-	}*/
-}
-
-
-// I NEED TO MAKE FS AN OPTIONAL PARAMETER AND GET RID OF FILL
-
 function Draw() {
 	this.canvas;
 	this.render;
+
+	// Canvas / Canvas Settings
 
 	this.createCanvas = function(x, y, w, h) {
 		this.canvas = document.createElement("CANVAS");
 		this.render = this.canvas.getContext("2d");
 
-		this.canvas.style.position = "absolute";
 
 		this.canvas.width = w;
 		this.canvas.height = h;
-		this.canvas.style.left = x;
-		this.canvas.style.top = y;
+		this.canvas.style.left = x + "px";
+		this.canvas.style.top = y + "px";
+		this.canvas.style.position = "absolute";
 
 	    document.body.appendChild(this.canvas);
 	}
 
+	this.canvasBg = function(bg) {
+		this.rect(parseInt(this.canvas.style.left.replace(/\D/g,'')), parseInt(this.canvas.style.top.replace(/\D/g,'')), this.canvas.width, this.canvas.height, bg);
+	}
+
+	// SHAPES/POLYGONS
+
 	this.rect = function(x, y, w, h, fs) {
 		this.render.fillStyle = fs;
 		this.render.fillRect(x, y, w, h);
+		this.render.fill();
 	}
 
 	this.ellipse = function(x, y, rx, ry, r, sa, ea, fs) {
@@ -97,4 +68,42 @@ function Draw() {
 			this.render.fill();
 		}
 	}
+
+	this.line = function(x1, y1, x2, y2, fs, lw) {
+		this.render.strokeStyle = fs;
+		this.render.lineWidth = lw;
+		this.render.beginPath();
+		this.render.moveTo(x1, y1);
+		this.render.lineTo(x2, y2);
+		this.render.stroke();
+
+		if(fs != undefined) {
+			this.render.fill();
+		}
+	}
+
+	this.triangle = function(x1, y1, x2, y2, x3, y3, fs, ls, lw) {
+		this.render.fillStyle = fs;
+		this.render.strokeStyle = ls;
+		this.render.lineWidth = lw;
+		this.render.beginPath();
+
+		this.render.moveTo(x1, y1);
+		this.render.lineTo(x2, y2);
+		this.render.lineTo(x3, y3);
+		this.render.stroke();
+
+		if(fs != undefined) {
+			this.render.fill();
+		}
+	}
+
+	// IMAGES
+
+	/*this.image = function(img, sx, sy, sw, sh, dx, dy, dw, dh) {
+		var image = document.createElement("img");
+		image.style.width = 0;
+		image.style.height = 0;
+ 		void this.render.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+	}*/
 }
