@@ -1,3 +1,7 @@
+function Ibrah() {
+	this.Draw = new Draw();
+}
+
 function Draw() {
 	this.canvas;
 	this.render;

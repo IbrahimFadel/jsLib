@@ -1,7 +1,13 @@
-var Draw = new Draw();
-Draw.createCanvas(300, 40, 700, 200);
+var Ibrah = new Ibrah();
 
-Draw.canvasBg("blue");
+Ibrah.Draw.createCanvas(0, 0, 200, 200);
+
+//Ibrah.Draw.createCanvas(0, 0, 200, 200);
+
+Ibrah.Draw.canvasBg("blue");
+
+//Draw.rect(12, 10, 100, 100, "red");
+//Draw.circle(5, 5, 5, 0, 2*Math.PI, "yellow")
 
 
 
