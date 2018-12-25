@@ -59,27 +59,27 @@ function Draw() {
 		this.render.fillRect(x, y, w, h);
 	}
 
-	this.ellipse = function(x, y, rx, ry, r, sa, ea, fs, fill) {
+	this.ellipse = function(x, y, rx, ry, r, sa, ea, fs) {
 		this.render.fillStyle = fs;
 		this.render.ellipse(x, y, rx, ry, r, sa, ea);
 		this.render.stroke();
 
-		if(fill) {
+		if(fs != undefined) {
 			this.render.fill();
 		}
 	}
 
-	this.circle = function(x, y, r, sa, ea, fs, fill) {
+	this.circle = function(x, y, r, sa, ea, fs) {
 		this.render.fillStyle = fs;
 		this.render.arc(x, y, r, sa, ea);
 		this.render.stroke();
 
-		if(fill) {
+		if(fs != undefined) {
 			this.render.fill();
 		}
 	}
 
-	this.poly = function(x, y, polyPts, fs, fill) {
+	this.poly = function(x, y, polyPts, fs) {
 		var args = polyPts;
 
 		this.render.fillStyle = fs;
@@ -93,7 +93,7 @@ function Draw() {
 
 		this.render.closePath();
 		
-		if(fill) {
+		if(fs != undefined) {
 			this.render.fill();
 		}
 	}
