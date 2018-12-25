@@ -17,18 +17,9 @@ function Physics() {
 		Ibrah.Draw.img(x, y, img);
 	}
 
-	/*this.enablePhyics = function(obj) {
-		obj = {
-			x : 0,
-			y: 0
-		};
-		obj.y = 100; 
-	}
+	// this.enablePhysics
 
-	this.enableGravity = function(obj, amt) {
-		this.gravity = amt;
-		obj.y -= this.gravity;
-	}*/
+	//this.enableGravity
 }
 
 function Draw() {
@@ -133,11 +124,27 @@ function Draw() {
 		this.circle(x, y, lw, 0, 2*Math.PI, fs);
 	}
 
+	this.drawImage = function(ctx, image) {
+		if(!image.complete) {
+			setTimeout(function() {
+				Ibrah.Draw.drawImage(this.render, image);
+			}, 50);
+			return;
+		}
+
+		this.render.drawImage(image, 0, 0, 300, 100);
+	}
+
 	this.img = function(sx, sy, img, sw, sh, dx, dy, dw, dh) {
 		let image = new Image();
 		image.src = img;
+		this.drawImage(this.render, image);
+		/*let image = new Image();
+		image.src = img;
 		caller = this.img.caller;
 		found = false;
+		//sw = 0;
+		//sh = 0;
 		if(this.img.caller == caller && caller != null) {
 			console.log("Found Caller")
 			found = true;
@@ -150,13 +157,13 @@ function Draw() {
 			if(found) {
 				sw = this.width;
 				sh = this.height;
+				console.log(image);
+				Ibrah.Draw.render.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
+			} else {
 				console.log(sw + ' ' + sh);
+				Ibrah.Draw.render.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
 			}
-		})
-
-		console.log(sw + ' ' + sh);
-		
-		void this.render.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
+		})*/
 	}
 }
 
