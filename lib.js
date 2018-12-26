@@ -3,6 +3,11 @@ function Ibrah() {
 	this.render;
 	this.Draw = new Draw();
 	this.Physics = new Physics();
+	$(document).ready(function() {
+		if(typeof Update == 'function') {
+			window.setInterval(Update, 1);
+		}
+	});
 }
 
 function Physics() {
@@ -13,15 +18,33 @@ function Physics() {
 		this.sprite = {
 			x : x,
 			y: y,
-			img: img
+			img: img,
+			physicsEnabled : false,
+			gravityEnabled : false,
+			velocity : {
+				x,
+				y
+			}
 		}
 		Ibrah.Draw.img(x, y, img);
+		return this.sprite;
 	}
 
-	// this.enablePhysics
+	this.enablePhysics = function(sprite) {
+		sprite.physicsEnabled = true;
+	}
 
-	//this.enableGravity
+	this.enableGravity = function(sprite) {
+		if(sprite.physicsEnabled) {
+			sprite.gravityEnabled = true;
+		}
+	}
+
+	this.updatePos = function(sprite) {
+		
+	}
 }
+
 
 function Draw() {
 	this.createCanvas = function(x, y, w, h) {
@@ -39,7 +62,7 @@ function Draw() {
 	}
 
 	this.canvasBg = function(bg) {
-		Ibrah.rect(parseInt(Ibrah.canvas.style.left.replace(/\D/g,'')), parseInt(Ibrah.canvas.style.top.replace(/\D/g,'')), Ibrah.canvas.width, Ibrah.canvas.height, bg);
+		Ibrah.Draw.rect(parseInt(Ibrah.canvas.style.left.replace(/\D/g,'')), parseInt(Ibrah.canvas.style.top.replace(/\D/g,'')), Ibrah.canvas.width, Ibrah.canvas.height, bg);
 	}
 
 	this.rect = function(x, y, w, h, fs) {
