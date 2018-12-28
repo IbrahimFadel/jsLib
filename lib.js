@@ -16,12 +16,12 @@ function Physics() {
 
 	this.createSprite = function(x, y, img) {
 		this.sprite = {
-			x : x,
+			x: x,
 			y: y,
 			img: img,
-			physicsEnabled : false,
-			gravityEnabled : false,
-			velocity : {
+			physicsEnabled: false,
+			gravityEnabled: false,
+			velocity: {
 				x,
 				y
 			}
